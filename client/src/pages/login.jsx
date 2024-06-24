@@ -17,8 +17,7 @@ function login() {
   const handleLogin =async()=>{
     const provider = new GoogleAuthProvider();
     const{ 
-      user: {displayName:name, email, photoURL:profileImage}
-    } = await signInWithPopup(firebaseAuth,provider);
+      user: {displayName:name, email, photoURL:profileImage}} = await signInWithPopup(firebaseAuth,provider);
     
     try{
       if(email){

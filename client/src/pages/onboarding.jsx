@@ -34,6 +34,8 @@ function onboarding() {
         const {data} =await axios.post(ONBOARD_USER_ROUTE,{
           email,name,about,image,
         });
+        console.log(data);
+
         if(data?.status){
           dispatch({ type: reducerCases.SET_NEW_USER, newUser: true });
           dispatch({

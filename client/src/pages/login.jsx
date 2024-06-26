@@ -12,11 +12,11 @@ import { FcGoogle } from "react-icons/fc";
 function login() {
   const router = useRouter();
 
-  const [{userInfo, newUser}, dispatch] = useStateProvider();
+  const [{ userInfo, newUser }, dispatch] = useStateProvider();
 
-  useEffect(()=>{
-    if(userInfo?.id && !newUser)router.push("/");
-  },[userInfo,newUser])
+  useEffect(() => {
+    if (userInfo?.id && !newUser) router.push("/");
+  }, [userInfo, newUser]);
 
   const handleLogin = async () => {
     const provider = new GoogleAuthProvider();
@@ -27,7 +27,7 @@ function login() {
     try {
       if (email) {
         const { data } = await axios.post(VERIFY_USER_ROUTE, { email });
-        // console.log(data);
+        console.log(data);
 
         if (!data.status) {
           dispatch({ type: reducerCases.SET_NEW_USER, newUser: true });
@@ -41,9 +41,14 @@ function login() {
             },
           });
           router.push("/onboarding");
-        }
-        else{
-          const {id,name,email,profilePicture:profileImage,status}=data;
+        } else {
+          const {
+            id,
+            name,
+            email,
+            profilePicture: profileImage,
+            status,
+          } = data.data;
           dispatch({
             type: reducerCases.SET_USER_INFO,
             userInfo: {
@@ -51,9 +56,10 @@ function login() {
               name,
               email,
               profileImage,
-              status,
+              status:"Active",
             },
           });
+          console.log(userInfo);
           router.push("/");
         }
       }
@@ -70,7 +76,7 @@ function login() {
           width={300}
           height={300}
         />
-        <span className="text-7xl ">Gossip Arena 2.0</span>
+        <span className="text-7xl">Gossip Arena 2.0</span>
       </div>
 
       <button

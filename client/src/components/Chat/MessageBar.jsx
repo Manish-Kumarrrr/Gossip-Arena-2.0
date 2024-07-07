@@ -4,14 +4,23 @@ import { BsEmojiSmile } from "react-icons/bs";
 import { MdSend } from "react-icons/md";
 import { FaMicrophone } from "react-icons/fa";
 import { useStateProvider } from "@/context/StateContext";
+import axios from "axios";
+import { ADD_MESSAGE_ROUTE } from "@/utils/ApiRoutes";
 
 function MessageBar() {
   const [{userInfo,currentChatUser},dispatch] = useStateProvider();
   const [message,setMessage] = useState("");
   const sendMessage = async() => {
-    alert(message);
-
-
+    try{
+      const {data} =await axios.post(ADD_MESSAGE_ROUTE,{
+        to:currentChatUser?.id,
+        from:userInfo?.id,
+        message,
+      });
+    }
+    catch(err){
+      console.log(err)
+    }
     setMessage("");
   }
   return (
